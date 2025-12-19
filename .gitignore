@@ -39,3 +39,13 @@
 
 # debug information files
 *.dwo
+
+# Generated files from flex/bison
+lexer.yy.cpp
+parser.tab.cpp
+parser.tab.hpp
+parser.tab.c
+parser.tab.h
+
+# Build artifacts
+luau
