@@ -15,6 +15,8 @@ Note although we support, do not yet implement first-class functions that can be
 
 The only Luau extension supported is the `type` keyword, and it just parses it but doesn't do actual type checking.
 
+As we're focused on building a JIT, implement the ability to run a .lua/.luau file, but no need to support a REPL interpreter mode.
+
 ## Implementation
 
 Use standard parsing tools flex and bison, Makefiles.
