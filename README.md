@@ -133,3 +133,61 @@ Individual benchmarks can be run directly:
 - Metatables
 - Coroutines
 - Most standard library functions beyond `print()`
+
+## Sample Bechmarks
+
+On a g4dn.xlarge instance:
+```
+Standard lua version:
+Lua 5.4.4  Copyright (C) 1994-2022 Lua.org, PUC-Rio
+
+Running benchmark: Arithmetic Operations
+-----------------------------------
+Standard Lua (interpreted):
+Arithmetic benchmark result: 500000.0
+
+real    0m0.047s
+user    0m0.047s
+sys     0m0.000s
+
+Our implementation (interpreted):
+Arithmetic benchmark result: 500000
+
+real    0m0.419s
+user    0m0.419s
+sys     0m0.000s
+
+Our implementation (JIT):
+Arithmetic benchmark result: 500000
+
+real    0m0.041s
+user    0m0.041s
+sys     0m0.000s
+
+-----------------------------------
+
+Running benchmark: Fibonacci
+-----------------------------------
+Standard Lua (interpreted):
+Fibonacci benchmark result: 8320400000
+
+real    0m0.008s
+user    0m0.008s
+sys     0m0.000s
+
+Our implementation (interpreted):
+Fibonacci benchmark result: 8320400000
+
+real    0m0.159s
+user    0m0.159s
+sys     0m0.000s
+
+Our implementation (JIT):
+Fibonacci benchmark result: 8320400000
+
+real    0m0.004s
+user    0m0.004s
+sys     0m0.000s
+```
+At least we can outperform standard `lua` in some strawman cases, better than the first draft
+implementation which turned out to be not a true JIT!
