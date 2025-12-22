@@ -4,7 +4,7 @@
 #include <cstring>
 #include "ast.h"
 #include "interpreter.h"
-#include "jit.h"
+#include "native_jit.h"
 
 extern FILE* yyin;
 extern int yyparse();
@@ -12,7 +12,7 @@ extern BlockNode* programRoot;
 
 void printUsage(const char* progName) {
     std::cerr << "Usage: " << progName << " [--jit] <filename.lua>" << std::endl;
-    std::cerr << "  --jit: Enable JIT compilation" << std::endl;
+    std::cerr << "  --jit: Enable native JIT compilation" << std::endl;
 }
 
 int main(int argc, char** argv) {
@@ -59,8 +59,8 @@ int main(int argc, char** argv) {
     try {
         Interpreter interp;
         if (useJIT) {
-            JITCompiler jit(&interp);
-            jit.executeJIT(programRoot);
+            NativeJIT jit(&interp);
+            jit.execute(programRoot);
         } else {
             interp.execute(programRoot);
         }

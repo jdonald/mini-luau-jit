@@ -3,17 +3,17 @@ CXXFLAGS = -std=c++17 -Wall -O2
 LDFLAGS =
 
 TARGET = luau
-SOURCES = main.cpp interpreter.cpp jit.cpp parser.tab.cpp lexer.yy.cpp
+SOURCES = main.cpp interpreter.cpp native_jit.cpp codegen_x86_64.cpp codegen_arm64.cpp parser.tab.cpp lexer.yy.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
-HEADERS = ast.h interpreter.h jit.h
+HEADERS = ast.h interpreter.h native_jit.h codegen.h
 
 all: $(TARGET)
 
+# Parser generation (requires bison)
 parser.tab.cpp parser.tab.hpp: parser.y
 	bison -d -o parser.tab.cpp parser.y
 
-lexer.yy.cpp: lexer.l parser.tab.hpp
-	flex -o lexer.yy.cpp lexer.l
+# Note: lexer.yy.cpp is now a hand-written lexer, not generated from lexer.l
 
 $(TARGET): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
@@ -28,7 +28,7 @@ lexer.yy.o: lexer.yy.cpp $(HEADERS) parser.tab.hpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(TARGET) $(OBJECTS) parser.tab.cpp parser.tab.hpp lexer.yy.cpp
+	rm -f $(TARGET) $(OBJECTS) parser.tab.cpp parser.tab.hpp *.o
 
 benchmark: $(TARGET)
 	@echo "Running benchmarks..."
