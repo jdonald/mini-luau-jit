@@ -31,7 +31,7 @@ Use standard parsing tools flex and bison, Makefiles.
 
 On Ubuntu/Debian:
 ```bash
-sudo apt-get install g++ flex bison
+sudo apt-get install g++ flex bison lua
 ```
 
 ### Build Instructions
